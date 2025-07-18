@@ -1,13 +1,119 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>数位时空穿梭机 - Digital Chrono-Cruiser</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- 3D场景容器 -->
+      <canvas id="three-canvas"></canvas>
+
+      <!-- UI控制面板 -->
+      <div id="ui-container">
+        <!-- 时间轴控制器 -->
+        <div id="timeline-controller">
+          <div class="timeline-header">
+            <h3>时间轴控制</h3>
+          </div>
+          <div class="timeline-slider-container">
+            <input type="range" id="timeline-slider" min="0" max="100" value="0" />
+            <div class="timeline-controls">
+              <button id="play-pause-btn" class="timeline-btn">▶️</button>
+              <button id="reset-timeline-btn" class="timeline-btn">⏮️</button>
+              <span class="timeline-tip">双击滑块或按空格键播放/暂停</span>
+            </div>
+            <div class="timeline-labels">
+              <span>古代</span>
+              <span>现代</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 信息面板 -->
+        <div id="info-panel">
+          <div class="info-header">
+            <h3>历史信息</h3>
+            <button id="close-info">×</button>
+          </div>
+          <div class="info-content">
+            <h4 id="info-title">选择一个历史节点</h4>
+            <p id="info-description">点击时间长廊中的任意模型来了解计算机发展历史</p>
+            <div id="info-specs"></div>
+          </div>
+        </div>
+
+        <!-- 导航控制 -->
+        <div id="navigation-controls">
+          <button id="reset-camera">重置视角</button>
+          <button id="toggle-mode">切换模式</button>
+          <button id="help-btn">帮助</button>
+
+          <!-- 组件选择器（仅在组件演进模式下显示） -->
+          <div id="component-selector" class="hidden">
+            <h4>选择组件类型</h4>
+            <button id="select-cpu" class="component-btn active">处理器</button>
+            <button id="select-memory" class="component-btn">内存</button>
+            <button id="select-storage" class="component-btn">存储器</button>
+          </div>
+        </div>
+
+        <!-- 帮助面板 -->
+        <div id="help-panel" class="hidden">
+          <div class="help-header">
+            <h3>操作指南</h3>
+            <button id="close-help">×</button>
+          </div>
+          <div class="help-content">
+            <div class="help-section">
+              <h4>🖱️ 鼠标操作</h4>
+              <ul>
+                <li>左键拖拽：旋转视角</li>
+                <li>滚轮：缩放视角</li>
+                <li>右键拖拽：平移视角</li>
+                <li>点击模型：查看详细信息</li>
+                <li>双击时间轴：播放/暂停</li>
+              </ul>
+            </div>
+            <div class="help-section">
+              <h4>⌨️ 键盘快捷键</h4>
+              <ul>
+                <li>空格键：播放/暂停时间轴</li>
+                <li>←/→：上一个/下一个时间点</li>
+                <li>Home：回到起点</li>
+                <li>End：跳到终点</li>
+                <li>ESC：关闭面板</li>
+              </ul>
+            </div>
+            <div class="help-section">
+              <h4>🎮 功能说明</h4>
+              <ul>
+                <li>历史长廊：浏览计算机发展历程</li>
+                <li>组件演进：对比核心部件变化</li>
+                <li>时间轴：控制历史时间进度</li>
+                <li>信息面板：查看详细技术规格</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 性能监控 -->
+      <div id="performance-monitor">
+        <div class="fps-counter">FPS: <span id="fps-value">60</span></div>
+      </div>
+
+      <!-- 加载界面 -->
+      <div id="loading-screen">
+        <div class="loading-content">
+          <h2>数位时空穿梭机</h2>
+          <div class="loading-spinner"></div>
+          <p>正在加载历史长廊...</p>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
