@@ -4,7 +4,13 @@
   "version": "1.0.0",
   "type": "module",
   "description": "一个交互式3D计算机历史展示应用",
-  "keywords": ["three.js", "3d", "computer-history", "interactive", "typescript"],
+  "keywords": [
+    "three.js",
+    "3d",
+    "computer-history",
+    "interactive",
+    "typescript"
+  ],
   "author": "Digital Chrono-Cruiser Team",
   "license": "MIT",
   "scripts": {
@@ -15,6 +21,7 @@
     "clean": "rm -rf dist"
   },
   "devDependencies": {
+    "terser": "^5.43.1",
     "typescript": "~5.8.3",
     "vite": "^7.0.4"
   },
