@@ -33,8 +33,27 @@ export class UIManager {
     this.infoPanelSpecs = document.getElementById('info-specs') as HTMLElement
     this.closeInfoButton = document.getElementById('close-info') as HTMLElement
     
+    console.log('UI元素查找结果:')
+    console.log('infoPanel:', this.infoPanel)
+    console.log('infoPanelTitle:', this.infoPanelTitle)
+    console.log('infoPanelDescription:', this.infoPanelDescription)
+    console.log('infoPanelSpecs:', this.infoPanelSpecs)
+    console.log('closeInfoButton:', this.closeInfoButton)
+    
     if (!this.infoPanel) {
-      throw new Error('找不到信息面板元素')
+      throw new Error('找不到信息面板元素 (#info-panel)')
+    }
+    
+    if (!this.infoPanelTitle) {
+      console.warn('找不到信息面板标题元素 (#info-title)')
+    }
+    
+    if (!this.infoPanelDescription) {
+      console.warn('找不到信息面板描述元素 (#info-description)')
+    }
+    
+    if (!this.infoPanelSpecs) {
+      console.warn('找不到信息面板规格元素 (#info-specs)')
     }
   }
 
@@ -95,7 +114,12 @@ export class UIManager {
    * 显示信息面板
    */
   showInfoPanel(data: any): void {
-    if (!this.infoPanel) return
+    if (!this.infoPanel) {
+      console.error('信息面板元素未找到')
+      return
+    }
+
+    console.log('显示信息面板:', data)
 
     // 更新面板内容
     this.updateInfoPanelContent(data)
@@ -106,6 +130,8 @@ export class UIManager {
     
     // 添加显示动画
     this.animateInfoPanelIn()
+    
+    console.log('信息面板已显示')
   }
 
   /**
@@ -125,16 +151,26 @@ export class UIManager {
    * 更新信息面板内容
    */
   private updateInfoPanelContent(data: any): void {
+    console.log('更新信息面板内容:', data)
+    
     if (this.infoPanelTitle) {
       this.infoPanelTitle.textContent = data.title || '未知设备'
+    } else {
+      console.error('找不到信息面板标题元素')
     }
     
     if (this.infoPanelDescription) {
       this.infoPanelDescription.textContent = data.description || '暂无描述信息'
+    } else {
+      console.error('找不到信息面板描述元素')
     }
     
     if (this.infoPanelSpecs && data.specs) {
       this.infoPanelSpecs.innerHTML = this.formatSpecs(data.specs)
+    } else if (this.infoPanelSpecs) {
+      this.infoPanelSpecs.innerHTML = '<p class="no-specs">暂无技术规格信息</p>'
+    } else {
+      console.error('找不到信息面板规格元素')
     }
   }
 

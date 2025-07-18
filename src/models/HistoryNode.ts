@@ -214,6 +214,8 @@ export class HistoryNode {
    * 点击处理
    */
   onClick(): void {
+    console.log('历史节点被点击:', this.data.title)
+    
     // 点击动画
     gsap.to(this.mainModel.scale, {
       x: 1.2,

@@ -172,15 +172,23 @@ export class HistoryGallery {
    */
   private setupInteraction(): void {
     const canvas = document.getElementById('three-canvas')
-    if (!canvas) return
+    if (!canvas) {
+      console.error('找不到3D画布元素')
+      return
+    }
+
+    console.log('设置历史长廊交互事件')
 
     canvas.addEventListener('click', (event) => {
+      console.log('画布点击事件触发')
       this.handleClick(event)
     })
 
     canvas.addEventListener('mousemove', (event) => {
       this.handleMouseMove(event)
     })
+    
+    console.log('历史长廊交互事件设置完成')
   }
 
   /**
@@ -189,18 +197,30 @@ export class HistoryGallery {
   private handleClick(event: MouseEvent): void {
     if (!this.isVisible) return
 
+    // 防止事件冒泡
+    event.stopPropagation()
+
     this.updateMousePosition(event)
     this.raycaster.setFromCamera(this.mouse, this.getCamera())
 
-    const intersects = this.raycaster.intersectObjects(
-      this.galleryGroup.children, true
-    )
+    // 只检测历史节点的网格对象
+    const nodeObjects: THREE.Object3D[] = []
+    this.historyNodes.forEach(node => {
+      node.getGroup().traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          nodeObjects.push(child)
+        }
+      })
+    })
+
+    const intersects = this.raycaster.intersectObjects(nodeObjects, false)
 
     if (intersects.length > 0) {
       const clickedObject = intersects[0].object
       const historyNode = this.findHistoryNodeByObject(clickedObject)
       
       if (historyNode) {
+        console.log('点击了历史节点:', historyNode.getData().title)
         historyNode.onClick()
         this.triggerNodeClick(historyNode.getData())
       }
@@ -268,9 +288,21 @@ export class HistoryGallery {
    */
   private findHistoryNodeByObject(object: THREE.Object3D): HistoryNode | null {
     for (const node of this.historyNodes) {
-      if (node.getGroup().children.includes(object) || 
-          node.getGroup() === object ||
-          object.parent === node.getGroup()) {
+      const group = node.getGroup()
+      // 检查对象是否在节点组中
+      if (group === object || group.children.includes(object)) {
+        return node
+      }
+      
+      // 递归检查子对象
+      let found = false
+      group.traverse((child) => {
+        if (child === object) {
+          found = true
+        }
+      })
+      
+      if (found) {
         return node
       }
     }

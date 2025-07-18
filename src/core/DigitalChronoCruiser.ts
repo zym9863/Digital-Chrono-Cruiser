@@ -175,13 +175,17 @@ export class DigitalChronoCruiser {
 
     // 历史节点点击事件
     this.historyGallery.onNodeClick((nodeData: any) => {
+      console.log('收到历史节点点击事件:', nodeData)
       this.uiManager.showInfoPanel(nodeData)
     })
 
     // 组件演进点击事件
     this.componentEvolution.onComponentClick((componentData: any) => {
+      console.log('收到组件点击事件:', componentData)
       this.uiManager.showInfoPanel(componentData)
     })
+    
+    console.log('模块间通信设置完成')
   }
 
   /**
