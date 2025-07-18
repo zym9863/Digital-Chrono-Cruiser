@@ -385,7 +385,7 @@ export class ComponentModel {
    * 爆炸组件
    */
   private explodeComponents(): void {
-    this.detailParts.forEach((part, index) => {
+    this.detailParts.forEach((part) => {
       const direction = new THREE.Vector3(
         (Math.random() - 0.5) * 2,
         Math.random() + 0.5,
@@ -481,6 +481,27 @@ export class ComponentModel {
       z: scale,
       duration: 0.2
     })
+  }
+
+  /**
+   * 获取激活状态
+   */
+  getActive(): boolean {
+    return this.isActive
+  }
+
+  /**
+   * 获取高亮状态
+   */
+  getHighlighted(): boolean {
+    return this.isHighlighted
+  }
+
+  /**
+   * 获取悬停状态
+   */
+  getHovered(): boolean {
+    return this.isHovered
   }
 
   /**

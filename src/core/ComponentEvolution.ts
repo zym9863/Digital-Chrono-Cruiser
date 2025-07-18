@@ -157,7 +157,7 @@ export class ComponentEvolution {
   private createLabelsAndIndicators(): void {
     const timeLabels = ['1940s', '1950s', '1970s', '1990s', '2020s']
     
-    timeLabels.forEach((label, index) => {
+    timeLabels.forEach((_, index) => {
       // 创建时间标签（这里简化处理，实际应该使用文本几何体或HTML标签）
       const labelGeometry = new THREE.PlaneGeometry(2, 0.5)
       const labelMaterial = new THREE.MeshBasicMaterial({
