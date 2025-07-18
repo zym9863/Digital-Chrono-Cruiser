@@ -1,3 +1,4 @@
+# [English Version](./README_EN.md) | [中文版](./README.md)
 # 数位时空穿梭机 (Digital Chrono-Cruiser)
 
 一个交互式3D计算机历史展示应用，带您穿越计算机发展的时空长廊。
